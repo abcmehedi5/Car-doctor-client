@@ -15,7 +15,7 @@ const ServiceCard = ({ service }) => {
           <div>
             <Link to={`/book/${_id}`}>
               <button className="btn btn-primary btn-sm">
-                <FaArrowRight /> Book now
+                <FaArrowRight /> 
               </button>
             </Link>
           </div>

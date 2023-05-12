@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
+import { sweetError, sweetSuccess } from "./SweetAlert";
 
 const Navbar = () => {
+  const { user, singout, loading } = useContext(AuthContext);
   const navItems = (
     <>
       <li>
@@ -13,14 +16,28 @@ const Navbar = () => {
       <li>
         <Link to="/">Services</Link>
       </li>
-      <li>
+     {
+      !user &&  <li>
         <Link to="/login">Login</Link>
       </li>
+     }
       <li>
         <Link to="/">Contact</Link>
       </li>
     </>
   );
+  // if (loading) {
+  //   return <progress className="progress w-full"></progress>;
+  // }
+  const handleLogout = () => {
+    singout()
+      .then((result) => {
+        sweetSuccess("logout successfull");
+      })
+      .catch((error) => {
+        sweetError(error.message);
+      });
+  };
   return (
     <div>
       <div className="navbar bg-base-100 mt-6">
@@ -60,6 +77,15 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
         <div className="navbar-end">
+          {user && (
+            <button
+              onClick={() => handleLogout()}
+              className="btn btn-primary mr-10"
+            >
+              logout
+            </button>
+          )}
+          {loading && <progress className="progress w-full"></progress>}
           <button className="btn btn-outline btn-primary border-red-700  rounded-lg w-2/4">
             Appointment
           </button>

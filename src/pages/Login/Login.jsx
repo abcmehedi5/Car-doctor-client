@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import loginImg from "../../assets/images/login/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation,useNavigate } from "react-router-dom";
 import { FaFacebook, FaGoogle, FaLinkedinIn } from "react-icons/fa";
+import { AuthContext } from "../../providers/AuthProvider";
+import { sweetError, sweetSuccess } from "../Shared/SweetAlert";
 
 const Login = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const from = location.state?.from?.pathname || '/';
+  const { googleSingin } = useContext(AuthContext);
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+  };
+
+  const handleGoogleSingin = () => {
+    googleSingin()
+      .then((result) => {
+        const user = result.user;
+        sweetSuccess("login successfull");
+        navigate(from, { replace: true })
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        sweetError(errorMessage);
+      });
   };
   return (
     <div className="hero min-h-screen">
@@ -59,7 +78,10 @@ const Login = () => {
           <div className="mx-auto text-center">
             <p>Or Sign In with</p>
             <div className="flex justify-center gap-4 mt-5">
-              <button className="btn btn-outline btn-sm">
+              <button
+                onClick={() => handleGoogleSingin()}
+                className="btn btn-outline btn-sm"
+              >
                 <FaGoogle />
               </button>
               <button className="btn btn-outline btn-sm">

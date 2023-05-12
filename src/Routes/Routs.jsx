@@ -5,6 +5,7 @@ import Main from "../Layout/Main";
 import BookService from "../pages/BookService/BookService";
 import Login from "../pages/Login/Login";
 import SingUp from "../pages/SingUp/SingUp";
+import PrivateRouter from "./PrivateRouter";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -20,11 +21,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/singup",
-        element:<SingUp></SingUp>,
+        element: <SingUp></SingUp>,
       },
       {
         path: "/book/:id",
-        element: <BookService></BookService>,
+        element: (
+          <PrivateRouter>
+            <BookService></BookService>
+          </PrivateRouter>
+        ),
         // loader:(params) => fetch('')
       },
     ],
