@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "../pages/Home/Home/Home";
 import Main from "../Layout/Main";
 import BookService from "../pages/BookService/BookService";
+import Login from "../pages/Login/Login";
+import SingUp from "../pages/SingUp/SingUp";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -13,9 +15,17 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/singup",
+        element:<SingUp></SingUp>,
+      },
+      {
         path: "/book/:id",
         element: <BookService></BookService>,
-        loader:(params) => fetch('')
+        // loader:(params) => fetch('')
       },
     ],
   },
