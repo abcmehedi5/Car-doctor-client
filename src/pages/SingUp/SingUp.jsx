@@ -2,15 +2,34 @@ import React from "react";
 import loginImg from "../../assets/images/login/login.svg";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaGoogle, FaLinkedinIn } from "react-icons/fa";
+import { sweetError } from "../Shared/SweetAlert";
 const SingUp = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const confirmPassword = form.confirmPassword.value;
+
+    // validate
+    if (password != confirmPassword) {
+      sweetError("Password & Confirm Password do not match.");
+      return;
+    } else if (password.length < 6) {
+      sweetError("Please add at least 6 characters in your password");
+      return;
+    }
+    // const singup = { name, email, password };
+  };
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen ">
       <div className="hero-content flex-col lg:gap-24 lg:flex-row">
         <div className="text-center lg:text-left">
           <img className="max-w-xs" src={loginImg} alt="" />
         </div>
         <div className="card flex-shrink-0 md:w-full max-w-lg border-2 bg-base-100">
-          <form className="card-body">
+          <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
@@ -18,6 +37,8 @@ const SingUp = () => {
               <input
                 type="text"
                 placeholder="full name"
+                name="name"
+                required
                 className="input input-bordered rounded-lg"
               />
             </div>
@@ -26,7 +47,9 @@ const SingUp = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
-                type="text"
+                type="email"
+                name="email"
+                required
                 placeholder="email"
                 className="input input-bordered rounded-lg"
               />
@@ -37,6 +60,8 @@ const SingUp = () => {
               </label>
               <input
                 type="password"
+                name="password"
+                required
                 placeholder="password"
                 className="input input-bordered rounded-lg"
               />
@@ -47,6 +72,8 @@ const SingUp = () => {
               </label>
               <input
                 type="password"
+                required
+                name="confirmPassword"
                 placeholder="confirm password"
                 className="input input-bordered rounded-lg"
               />

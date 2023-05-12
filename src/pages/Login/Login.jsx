@@ -4,21 +4,29 @@ import { Link } from "react-router-dom";
 import { FaFacebook, FaGoogle, FaLinkedinIn } from "react-icons/fa";
 
 const Login = () => {
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const email = form.email.value;
+    const password = form.password.value;
+  };
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero min-h-screen">
       <div className="hero-content flex-col lg:gap-24 lg:flex-row">
         <div className="text-center lg:text-left">
           <img className="max-w-xs" src={loginImg} alt="" />
         </div>
         <div className="card flex-shrink-0 md:w-full max-w-lg border-2 bg-base-100">
-          <form className="card-body">
+          <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
-                type="text"
+                type="email"
                 placeholder="email"
+                name="email"
+                required
                 className="input input-bordered rounded-lg"
               />
             </div>
@@ -29,6 +37,8 @@ const Login = () => {
               <input
                 type="password"
                 placeholder="password"
+                required
+                name="password"
                 className="input input-bordered rounded-lg"
               />
               <label className="label">
