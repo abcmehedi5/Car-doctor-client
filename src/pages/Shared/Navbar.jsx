@@ -10,17 +10,19 @@ const Navbar = () => {
       <li>
         <Link to="/">Home</Link>
       </li>
-      <li>
-        <Link to="/about">About</Link>
-      </li>
+      {user && (
+        <li>
+          <Link to="/order">Order</Link>
+        </li>
+      )}
       <li>
         <Link to="/">Services</Link>
       </li>
-     {
-      !user &&  <li>
-        <Link to="/login">Login</Link>
-      </li>
-     }
+      {!user && (
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
+      )}
       <li>
         <Link to="/">Contact</Link>
       </li>
