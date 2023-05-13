@@ -7,6 +7,9 @@ import Login from "../pages/Login/Login";
 import SingUp from "../pages/SingUp/SingUp";
 import PrivateRouter from "./PrivateRouter";
 import Order from "../pages/Order/Order";
+import DasboardLayout from "../Layout/DasboardLayout";
+import Dashboard from "../pages/InventoryMangement/Dashboard/Dashboard/Dashboard";
+import ReviewOrders from "../pages/InventoryMangement/Dashboard/ReviewOrders/ReviewOrders";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,7 +39,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/order",
-        element: <Order></Order>
+        element: <Order></Order>,
+      },
+    ],
+  },
+
+  // dashboard routes
+
+  {
+    path: "/",
+    element: <DasboardLayout></DasboardLayout>,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Dashboard></Dashboard>,
+      },
+      {
+        path: "/review-orders",
+        element: <ReviewOrders></ReviewOrders>,
       },
     ],
   },

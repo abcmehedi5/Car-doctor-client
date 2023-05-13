@@ -9,10 +9,14 @@ const OrderRow = ({ book, handleOrderDelete }) => {
       <td>
         <h4
           className={`${
-            status == "pending" ? "bg-red-600" : "bg-success"
+            status == "pending"
+              ? "bg-red-600"
+              : status == "cancel"
+              ? "bg-yellow-600"
+              : "bg-success"
           } text-center w-2/4 p-1 rounded-lg text-white`}
         >
-          {status == "pending" ? "Pending" : "Approved"}
+          {status}
         </h4>
       </td>
       <td>

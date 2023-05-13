@@ -1,20 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
-import OrderRow from "./OrderRow";
-import { sweetSuccess } from "../Shared/SweetAlert";
+import { AuthContext } from "../../../../providers/AuthProvider";
+import OrderRow from "../../../Order/OrderRow";
 import Swal from "sweetalert2";
+import { sweetSuccess } from "../../../Shared/SweetAlert";
 
-const Order = () => {
+const RecentOrder = () => {
   const [bookings, setBookings] = useState([]);
   const { user } = useContext(AuthContext);
   useEffect(() => {
-    fetch(`http://localhost:5000/booking?email=${user?.email}`)
+    fetch(`http://localhost:5000/bookingAll`)
       .then((res) => res.json())
       .then((data) => setBookings(data));
-  }, []);
-
-  //   handle order delete
-
+  }, [bookings]);
   const handleOrderDelete = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -31,11 +28,6 @@ const Order = () => {
         })
           .then((res) => res.json())
           .then((result) => {
-            console.log(result);
-            if (result.deletedCount > 0) {
-              const filterBook = bookings.filter(book => book._id !== id)
-              setBookings(filterBook)
-            }
             sweetSuccess("order delete successfull");
           });
       }
@@ -43,8 +35,8 @@ const Order = () => {
   };
   return (
     <div className=" mt-10 shadow-lg p-5 overflow-x-auto min-h-screen">
-      <h1 className="text-3xl text-center mb-5 font-bold">
-        My Orders ({bookings.length})
+      <h1 className="text-2xl  mb-5 font-bold">
+      Recent orders 
       </h1>
       {bookings.length > 0 ? (
         <table className="table w-full">
@@ -59,7 +51,7 @@ const Order = () => {
             </tr>
           </thead>
           <tbody>
-            {bookings.map((book) => (
+            {bookings.slice(-10).reverse().map((book) => (
               <OrderRow
                 book={book}
                 key={book._id}
@@ -75,4 +67,4 @@ const Order = () => {
   );
 };
 
-export default Order;
+export default RecentOrder;
